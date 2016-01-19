@@ -64,7 +64,7 @@ exports.create = function (req, res) {
 
 	var request = require('request');
 	var formData = {
-		nombreFichero: name+'.'+extension,
+		filename: name+'.'+extension,
 		miBuffer: buffer 
 	};
 	request.post({url: urlPOST, formData: formData}, function optionalCallback(err, httpResponse,body){
@@ -75,7 +75,7 @@ exports.create = function (req, res) {
 
 			// Escribe los metadatos de la nueva canción en el registro.
 			var track = new Track({
-				name:name,
+				name: name,
 				url: nuevaUrl,
 				trackId: body
 				//image: imageURL
