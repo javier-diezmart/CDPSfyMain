@@ -1,5 +1,5 @@
 var fs = require('fs');
-//var track_model = require('./../models/track');
+
 var querystring = require('querystring')
 var http = require('http')
 
@@ -37,7 +37,6 @@ exports.show = function (req, res) {
 exports.create = function (req, res) {
 	var urlPOST = 'http://www.tracks.cdpsfy.es:80/api/tracks';
 
-	//var imageURL = '/images/quaver3.png';
 
 	var track = req.files.track;
 
@@ -82,7 +81,6 @@ exports.create = function (req, res) {
 				name: name,
 				url: nuevaUrl,
 				caract: body
-				//image: imageURL
 			});
 			track.save(function(err,track){
 				if(err){console.log('error al guardar track en BBDD');
