@@ -35,7 +35,7 @@ exports.show = function (req, res) {
 // - Escribir en tracks.cdpsfy.es el fichero de audio contenido en req.files.track.buffer
 // - Escribir en el registro la verdadera url generada al añadir el fichero en el servidor tracks.cdpsfy.es
 exports.create = function (req, res) {
-	var urlPOST = 'http://www.tracks.cdpsfy.es:80/api/tracks';
+	var urlPOST = 'http://www.tracks.cdpsfy.es:8001/api/tracks';
 
 	//var imageURL = '/images/quaver3.png';
 
@@ -70,7 +70,7 @@ exports.create = function (req, res) {
 	request.post({url: urlPOST, formData: formData}, function optionalCallback(err, httpResponse,body){
 		if(err){return console.error('fallo al hacer el post: ', err);
 		}else{
-			var nuevaUrl = 'http://www.tracks.cdpsfy.es:80/api/tracks/'+body;
+			var nuevaUrl = 'http://www.tracks.cdpsfy.es:8001/api/tracks/'+body;
 			console.log('post con exito',body);
 
 			// Escribe los metadatos de la nueva canción en el registro.
@@ -95,7 +95,7 @@ exports.create = function (req, res) {
 // - Eliminar en tracks.cdpsfy.es el fichero de audio correspondiente a trackId
 exports.destroy = function (req, res) {
 	var trackId = req.params.trackId;
-	var URLservidor = 'http://www.tracks.cdpsfy.es:80/api/tracks/'+trackId;
+	var URLservidor = 'http://www.tracks.cdpsfy.es:8001/api/tracks/'+trackId;
 	var request= require('request');
 	request.post(URLservidor, '');
 
