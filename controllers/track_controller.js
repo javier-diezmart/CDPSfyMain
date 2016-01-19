@@ -23,7 +23,7 @@ exports.new = function (req, res) {
 // Devuelve la vista de reproducción de una canción.
 // El campo track.url contiene la url donde se encuentra el fichero de audio
 exports.show = function (req, res) {
-	var query = Track.findOne({'trackId':req.params.trackId});
+	var query = Track.findOne({'caract':req.params.trackId});
 	query.exec(function(err,track){
 		if(err){console.log('error mostrando track'+err);}
 		else{res.render('tracks/show', {track: track});}
@@ -43,6 +43,8 @@ exports.create = function (req, res) {
 
 	if(typeof track == undefined){
 		console.log('No hay track seleccionada');
+		res.render('tracks/new');
+		return;
 	}
 
 	var extension = track.extension;
@@ -50,7 +52,9 @@ exports.create = function (req, res) {
 	extension.toLowerCase();
 
 	if(extensionesPermitidas.indexOf(extension)== -1){
-		console.log('extensión no permitida')
+		console.log('extensión no permitida');
+		res.render('tracks/new');
+		return;
 	}
 
 	console.log('Nuevo fichero de audio. Datos: ', track);
@@ -77,7 +81,7 @@ exports.create = function (req, res) {
 			var track = new Track({
 				name: name,
 				url: nuevaUrl,
-				trackId: body
+				caract: body
 				//image: imageURL
 			});
 			track.save(function(err,track){
@@ -94,8 +98,8 @@ exports.create = function (req, res) {
 // TODO:
 // - Eliminar en tracks.cdpsfy.es el fichero de audio correspondiente a trackId
 exports.destroy = function (req, res) {
-	var trackId = req.params.trackId;
-	var URLservidor = 'http://www.tracks.cdpsfy.es:80/api/tracks/'+trackId;
+	var caract = req.params.id;
+	var URLservidor = 'http://www.tracks.cdpsfy.es:80/api/tracks/'+caract;
 	var request= require('request');
 	request.post(URLservidor, '');
 
@@ -103,7 +107,7 @@ exports.destroy = function (req, res) {
 	// Aquí debe implementarse el borrado del fichero de audio indetificado por trackId en tracks.cdpsfy.es
 
 	// Borra la entrada del registro de datos
-	var query = Track.findOne({'trackId':trackId});
+	var query = Track.findOne({'caract': caract});
 	query.exec(function(err,track){
 		if(err){
 			console.log('fallo al buscar track');

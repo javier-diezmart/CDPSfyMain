@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 
 var trackSchema = new Schema({
 	name: {type: String},
-	trackId: {type: String},
+	caract: {type: String},
 	url: {type: String}
 	//image: {type: String}
 });
